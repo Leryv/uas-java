@@ -48,7 +48,7 @@ public class AdminView {
                     break;
                 case 0:
                     mainView.setCurrentUser(null);
-                    System.out.println("🔒 Berhasil logout.\n");
+                    System.out.println("Berhasil logout.\n");
                     return;
                 default:
                     System.out.println("Pilihan tidak valid");
@@ -69,7 +69,7 @@ public class AdminView {
         System.out.println("=====================================================================================");
 
         for (Mahasiswa m : semua) {
-            String status = pembayaranService.isLunas(m) ? "✅ LUNAS" : " BELUM LUNAS";
+            String status = pembayaranService.isLunas(m) ? "LUNAS" : "BELUM LUNAS";
 
             System.out.printf("%-20s %-15s %-10s %-15.2f %-15.2f %-15s%n",
                     m.getNama(),

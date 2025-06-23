@@ -65,7 +65,7 @@ public class MainView {
         User student = new User("andika1505", "123", Role.STUDENT, m);
         authService.tambahUser(student);
 
-        System.out.println("✅ Data awal berhasil dimuat.");
+        System.out.println("Data awal berhasil dimuat.");
     }
 
     public void start() {
@@ -80,7 +80,7 @@ public class MainView {
             if (currentUser == null) {
                 System.out.println("Login gagal. Coba lagi.");
             } else {
-                System.out.println("Login berhasil sebagai " + currentUser.getRole());
+                System.out.println("Login berhasil sebagai " + currentUser.getRole().getDisplayName());
 
                 if (currentUser.getRole() == Role.ADMIN) {
                     adminView.menuAdmin();
