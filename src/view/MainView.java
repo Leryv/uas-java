@@ -248,6 +248,18 @@ public class MainView {
                 .sum();
     }
 
+    private String formatRupiah(double amount) {
+        // Menggunakan DecimalFormat untuk format mata uang Indonesia
+        DecimalFormat formatter = new DecimalFormat("Rp.#,###");
+        formatter.setDecimalSeparatorAlwaysShown(false);
+        formatter.setGroupingUsed(true);
+        formatter.setGroupingSize(3);
+
+        // Format angka dan ganti koma dengan titik
+        String formatted = formatter.format(amount);
+        return formatted.replace(',', '.');
+    }
+
     public void menuStudent() {
         Mahasiswa m = currentUser.getMahasiswaRef();
 
