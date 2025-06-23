@@ -12,13 +12,12 @@ public class PembayaranServiceImpl implements PembayaranService {
         double sisaTagihan = getSisaTagihan(m);
 
         if (jumlah > sisaTagihan) {
-            System.out.println("❌ Pembayaran melebihi tagihan. Sisa tagihan: Rp " + sisaTagihan);
+            System.out.println("Pembayaran melebihi tagihan. Sisa tagihan: Rp " + sisaTagihan);
             return;
         }
 
         Pembayaran p = new Pembayaran(jumlah, LocalDate.now(), metode, semester); // Simpan semester
         m.getPembayaranList().add(p);
-        System.out.println("✅ Pembayaran berhasil dicatat untuk semester " + semester);
     }
 
     @Override
