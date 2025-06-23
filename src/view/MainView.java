@@ -3,6 +3,7 @@ package view;
 import model.*;
 import service.*;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Scanner;
 
@@ -52,6 +53,20 @@ public class MainView {
             m = currentUser.getMahasiswaRef();
         }
 
+        // Minta input semester
+        System.out.print("Semester pembayaran (1-8): ");
+        int semester;
+        try {
+            semester = Integer.parseInt(scan.nextLine());
+            if (semester < 1 || semester > 8) {
+                System.out.println("❌ Semester harus antara 1-8.");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("❌ Input semester tidak valid.");
+            return;
+        }
+
         // Tampilkan tagihan & status
         tampilkanTagihan(m);
 
@@ -85,8 +100,8 @@ public class MainView {
         }
 
         // Simpan pembayaran
-        pembayaranService.bayar(m, jumlah, metode);
-        System.out.println("✅ Pembayaran berhasil dicatat.");
+        pembayaranService.bayar(m, jumlah, metode, semester);
+        System.out.println("✅ Pembayaran berhasil dicatat untuk semester " + semester);
     }
 
     private void lihatSemuaMahasiswa() {
@@ -195,25 +210,24 @@ public class MainView {
             return;
         }
 
-        System.out.println("=================================================================================");
-        System.out.printf("%-12s %-20s %-15s %-15s %-10s%n",
-                "Tanggal", "Nama Mahasiswa", "NIM", "Jumlah", "Metode");
-        System.out.println("=================================================================================");
+        System.out.println("======================================================================================");
+        System.out.printf("%-12s %-20s %-15s %-15s %-10s %-10s%n",
+                "Tanggal", "Nama Mahasiswa", "NIM", "Jumlah", "Metode", "Semester");
+        System.out.println("======================================================================================");
 
         for (Pembayaran p : semuaPembayaran) {
-            // Cari mahasiswa pemilik pembayaran
             Mahasiswa m = cariMahasiswaDariPembayaran(p);
-
             if (m != null) {
-                System.out.printf("%-12s %-20s %-15s %-15.2f %-10s%n",
+                System.out.printf("%-12s %-20s %-15s %-15.2f %-10s %-10d%n",
                         p.getTanggal(),
                         m.getNama(),
                         m.getNim(),
                         p.getJumlah(),
-                        p.getMetode());
+                        p.getMetode(),
+                        p.getSemester()); // Tampilkan semester
             }
         }
-        System.out.println("=================================================================================");
+        System.out.println("======================================================================================");
     }
 
     // METHOD PEMBANTU UNTUK MENCARI MAHASISWA DARI PEMBAYARAN
@@ -226,8 +240,30 @@ public class MainView {
         return null;
     }
 
+    // Method pembantu untuk menghitung total per semester
+    private double hitungTotalPerSemester(Mahasiswa m, int semester) {
+        return m.getPembayaranList().stream()
+                .filter(p -> p.getSemester() == semester)
+                .mapToDouble(Pembayaran::getJumlah)
+                .sum();
+    }
+
     public void menuStudent() {
         Mahasiswa m = currentUser.getMahasiswaRef();
+
+        // Tampilkan status per semester
+        System.out.println("\nStatus Pembayaran per Semester:");
+        for (int semester = 1; semester <= 8; semester++) {
+            double totalPerSemester = hitungTotalPerSemester(m, semester);
+            double tagihanSemester = m.getGrade().getBiayaSemester();
+            boolean lunasPerSemester = totalPerSemester >= tagihanSemester;
+
+            System.out.printf("Semester %d: %s (Rp %,.2f / Rp %,.2f)%n",
+                    semester,
+                    lunasPerSemester ? "✅ LUNAS" : "❌ BELUM LUNAS",
+                    totalPerSemester,
+                    tagihanSemester);
+        }
 
         while (true) {
             System.out.println("\n=== MENU MAHASISWA ===");
@@ -288,7 +324,9 @@ public class MainView {
 
         System.out.println("\nRiwayat Pembayaran:");
         for (Pembayaran p : m.getPembayaranList()) {
-            System.out.println("- " + p.getTanggal() + " | " + p.getMetode() + " | Rp " + p.getJumlah());
+            System.out.println("- Semester " + p.getSemester() + " | " +
+                    p.getTanggal() + " | " +
+                    p.getMetode() + " | Rp " + p.getJumlah());
         }
     }
 

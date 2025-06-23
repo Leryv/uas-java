@@ -13,4 +13,7 @@ public interface MahasiswaService {
     List<Mahasiswa> getSemuaMahasiswa();
 
     List<Pembayaran> getAllPembayaran();
+
+    double getTotalPembayaranPerSemester(String nim, int semester);
+
 }

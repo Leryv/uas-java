@@ -6,15 +6,18 @@ public class Pembayaran {
     private double jumlah;
     private LocalDate tanggal;
     private String metode; // "kontan" atau "cicil"
+    private int semester; // Tambahkan atribut semester
 
-    public Pembayaran(double jumlah, LocalDate tanggal, String metode) {
+    public Pembayaran(double jumlah, LocalDate tanggal, String metode, int semester) {
         this.jumlah = jumlah;
         this.tanggal = tanggal;
         this.metode = metode;
+        this.semester = semester; // Inisialisasi semester
     }
 
+    // Getter & Setter
     public double getJumlah() {
-        return this.jumlah;
+        return jumlah;
     }
 
     public void setJumlah(double jumlah) {
@@ -22,7 +25,7 @@ public class Pembayaran {
     }
 
     public LocalDate getTanggal() {
-        return this.tanggal;
+        return tanggal;
     }
 
     public void setTanggal(LocalDate tanggal) {
@@ -30,12 +33,19 @@ public class Pembayaran {
     }
 
     public String getMetode() {
-        return this.metode;
+        return metode;
     }
 
     public void setMetode(String metode) {
         this.metode = metode;
     }
 
-    // Getter & Setter
+    // Tambahkan getter dan setter untuk semester
+    public int getSemester() {
+        return semester;
+    }
+
+    public void setSemester(int semester) {
+        this.semester = semester;
+    }
 }

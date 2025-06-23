@@ -36,4 +36,16 @@ public class MahasiswaServiceImpl implements MahasiswaService {
         return semuaPembayaran;
     }
 
+    @Override
+    public double getTotalPembayaranPerSemester(String nim, int semester) {
+        Mahasiswa m = cariMahasiswa(nim);
+        if (m == null)
+            return 0;
+
+        return m.getPembayaranList().stream()
+                .filter(p -> p.getSemester() == semester)
+                .mapToDouble(Pembayaran::getJumlah)
+                .sum();
+    }
+
 }

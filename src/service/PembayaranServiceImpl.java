@@ -8,7 +8,7 @@ import java.time.LocalDate;
 public class PembayaranServiceImpl implements PembayaranService {
 
     @Override
-    public void bayar(Mahasiswa m, double jumlah, String metode) {
+    public void bayar(Mahasiswa m, double jumlah, String metode, int semester) { // Tambahkan parameter semester
         double sisaTagihan = getSisaTagihan(m);
 
         if (jumlah > sisaTagihan) {
@@ -16,10 +16,9 @@ public class PembayaranServiceImpl implements PembayaranService {
             return;
         }
 
-        Pembayaran p = new Pembayaran(jumlah, LocalDate.now(), metode);
+        Pembayaran p = new Pembayaran(jumlah, LocalDate.now(), metode, semester); // Simpan semester
         m.getPembayaranList().add(p);
-        System.out.println("✅ Pembayaran berhasil dicatat.");
-
+        System.out.println("✅ Pembayaran berhasil dicatat untuk semester " + semester);
     }
 
     @Override
