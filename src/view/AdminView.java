@@ -128,7 +128,14 @@ public class AdminView {
         String g = scan.nextLine().toUpperCase();
         Grade grade = Grade.valueOf(g);
 
-        Mahasiswa m = new Mahasiswa(nama, nim, grade);
+        System.out.print("Jurusan (A/B/C/D): ");
+        System.out.println("\n A. Teknologi Informasi");
+        System.out.println("B. Sistem Informasi");
+        System.out.println("C. Rekayasa Perangkat Lunak");
+        String majorPilihan = scan.nextLine().toUpperCase();
+        Major major = Major.valueOf(majorPilihan);
+
+        Mahasiswa m = new Mahasiswa(nama, nim, grade, major);
         mahasiswaService.tambahMahasiswa(m);
 
         System.out.print("Username untuk mahasiswa: ");

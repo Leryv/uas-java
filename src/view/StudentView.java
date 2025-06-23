@@ -58,14 +58,15 @@ public class StudentView {
         // Tampilkan status per semester
         for (int semester = 1; semester <= 8; semester++) {
             double totalPerSemester = hitungTotalPerSemester(m, semester);
-            double tagihanSemester = m.getGrade().getBiayaSemester();
-            boolean lunasPerSemester = totalPerSemester >= tagihanSemester;
+            double biayaPerSemester = m.getGrade().getBiayaSemester() + m.getMajor().getDisplayPaymentOfMajor();
+
+            boolean lunasPerSemester = totalPerSemester >= biayaPerSemester;
 
             System.out.printf("Semester %d: %s (Rp %,.0f / Rp %,.0f)%n",
                     semester,
                     lunasPerSemester ? "LUNAS" : "BELUM LUNAS",
                     totalPerSemester,
-                    tagihanSemester);
+                    biayaPerSemester);
         }
 
     }
@@ -149,12 +150,7 @@ public class StudentView {
         System.out.println("Nama: " + m.getNama());
         System.out.println("NIM: " + m.getNim());
         System.out.println("Grade: " + m.getGrade());
-        // System.out.println("Total Tagihan: " + m.getGrade().getBiayaSemester());
-        // System.out.println("Total Bayar: " +
-        // pembayaranService.getTotalPembayaran(m));
-        // System.out.println("Sisa Tagihan: " + pembayaranService.getSisaTagihan(m));
-        // System.out.println("Status: " + (pembayaranService.isLunas(m) ? "LUNAS" :
-        // "BELUM LUNAS"));
+        System.out.println("Jurusan: " + m.getMajor());
 
         System.out.println("\nRiwayat Pembayaran:");
         for (Pembayaran p : m.getPembayaranList()) {
@@ -165,7 +161,8 @@ public class StudentView {
     }
 
     private void tampilkanTagihan(Mahasiswa m) {
-        System.out.println("Tagihan: Rp " + m.getGrade().getBiayaSemester());
+        double jumlahTagihanTotal = m.getGrade().getBiayaSemester() + m.getMajor().getDisplayPaymentOfMajor();
+        System.out.println("Tagihan: Rp " + jumlahTagihanTotal);
         double sudahBayar = pembayaranService.getTotalPembayaran(m);
         System.out.println("Sudah Bayar: Rp " + sudahBayar);
         System.out.println("Sisa: Rp " + pembayaranService.getSisaTagihan(m));

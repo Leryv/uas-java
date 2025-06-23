@@ -59,7 +59,7 @@ public class MainView {
         authService.tambahUser(admin);
 
         // Mahasiswa + akun student
-        Mahasiswa m = new Mahasiswa("Andika", "2024320038", Grade.A);
+        Mahasiswa m = new Mahasiswa("Andika", "2024320038", Grade.A, Major.A);
         mahasiswaService.tambahMahasiswa(m);
 
         User student = new User("andika1505", "123", Role.STUDENT, m);
@@ -87,7 +87,6 @@ public class MainView {
                 } else if (currentUser.getRole() == Role.STUDENT) {
                     studentView.menuStudent();
                 }
-
                 handleLogout();
             }
         }

@@ -29,7 +29,7 @@ public class PembayaranServiceImpl implements PembayaranService {
 
     @Override
     public double getSisaTagihan(Mahasiswa m) {
-        double totalTagihan = m.getGrade().getBiayaSemester();
+        double totalTagihan = m.getGrade().getBiayaSemester() + m.getMajor().getDisplayPaymentOfMajor();
         double totalDibayar = getTotalPembayaran(m);
         return totalTagihan - totalDibayar;
     }

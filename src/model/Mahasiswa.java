@@ -7,12 +7,14 @@ public class Mahasiswa {
     private String nama;
     private String nim;
     private Grade grade;
+    private Major major;
     private List<Pembayaran> pembayaranList = new ArrayList<>();
 
-    public Mahasiswa(String nama, String nim, Grade grade) {
+    public Mahasiswa(String nama, String nim, Grade grade, Major major) {
         this.nama = nama;
         this.nim = nim;
         this.grade = grade;
+        this.major = major;
     }
 
     public String getNama() {
@@ -37,6 +39,14 @@ public class Mahasiswa {
 
     public void setGrade(Grade grade) {
         this.grade = grade;
+    }
+
+    public Major getMajor() {
+        return this.major;
+    }
+
+    public void setMajor(Major major) {
+        this.major = major;
     }
 
     public List<Pembayaran> getPembayaranList() {
